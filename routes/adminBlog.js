@@ -7,19 +7,8 @@ const options = {
   encoding: 'utf-8'
 };
 
-router.post('/login/account', function (req, res) {
-  const { userName, password } = req.body;
-  if (userName == 'hello' && password == 'world') {
-    res.cookie('authorized', userName);
-    res.redirect('/admin');
-  }
-  else {
-    res.render('login', { flag: 1 });
-  }
-})
-
 /* 获取文章列表 */
-router.get('/blog', function (req, res) {  
+router.get('/', function (req, res) {  
   const {
     query: {
       current,
@@ -74,7 +63,7 @@ router.get('/blog', function (req, res) {
 });
 
 /* 展示或隐藏文章 */
-router.put('/blog/:id/:status', (req, res) => {
+router.put('/:id/:status', (req, res) => {
   const { id, status } = req.params;
   fs.readFile(path, options, (err, blog) => {
     if (!err) {
@@ -95,7 +84,7 @@ router.put('/blog/:id/:status', (req, res) => {
 });
 
 /* 修改文章信息 */
-router.put('/blog/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const id = req.params.id;
   const query = req.query;
   fs.readFile(path, options, (err, blog) => {
@@ -119,7 +108,7 @@ router.put('/blog/:id', (req, res) => {
 });
 
 /* 创建新文章*/
-router.post('/blog', (req, res) => {
+router.post('/', (req, res) => {
   const { title, author, classify, content } = req.body;
   fs.readFile(path, options, (err, blog) => {
     if (!err) {

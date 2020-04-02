@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   const url = req.originalUrl;
-  if (url.includes('admin' || 'user' || 'login')) {
+  if (url.includes('admin') || url.includes('user')) {
     if (req.cookies.authorized === 'darkroom') {
       next();
     } else {
@@ -12,6 +12,8 @@ router.get('/', (req, res, next) => {
         status: 'error',
       });
     }
+  } else {
+    next();
   }
 });
 

@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
 const blog = require('./routes/blog');
-const admin = require('./routes/admin');
+const adminBlog = require('./routes/adminBlog');
+const adminPhoto = require('./routes/adminPhoto');
 const login = require('./routes/login');
 const user = require('./routes/user');
 
@@ -29,7 +30,8 @@ app.use('/api/*', index);
 app.use('/api/login', login);
 app.use('/api/user', user);
 app.use('/api/blog', blog);
-app.use('/api/admin', admin);
+app.use('/api/admin/photo', adminPhoto);
+app.use('/api/admin/blog', adminBlog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
