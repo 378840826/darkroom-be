@@ -90,6 +90,7 @@ router.post('/', upload.single('uploadPhoto'), function (req, res) {
         classify,
         date: (new Date()).getTime(),
         url: `//image.darkroom.cc/${filename}`,
+        minUrl: `//image.darkroom.cc/min/${filename}`,
       };
       list.push(newImg);
       const newPhotos = JSON.stringify({ lastId, list }, null, 2);
