@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 const multer = require('multer');
-const images = require('images');
 
 const router = express.Router();
 const path = './data/photoList.json';
@@ -11,11 +10,19 @@ const options = {
 
 const imgSavePath = '/home/image';
 const minImgSavePath = '/home/image/min';
+// const imgSavePath = './data/images';
+// const minImgSavePath = './data/images/min';
 
 // multer 配置
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, imgSavePath)
+    // 区分缩略图
+    let savePath = imgSavePath;
+    const name = file.originalname;
+    if (name.slice(0, 4) === 'min_') {
+      savePath = minImgSavePath;
+    }
+    cb(null, savePath)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -78,6 +85,10 @@ router.get('/', function (req, res) {
 router.post('/', upload.single('uploadPhoto'), function (req, res) {
   const { classify } = req.body;
   const { filename, size, mimetype } = req.file;
+  if (!classify) {
+    res.send()
+    return
+  }
   fs.readFile(path, options, (err, photos) => {
     if (!err) {
       let { list, lastId } = JSON.parse(photos);
@@ -96,9 +107,6 @@ router.post('/', upload.single('uploadPhoto'), function (req, res) {
       const newPhotos = JSON.stringify({ lastId, list }, null, 2);
       fs.writeFile(path, newPhotos, err => {
         if (!err) {
-          const imgPath = `${imgSavePath}/${filename}`;
-          // 保存缩略图
-          images(imgPath).size(100).save(`${minImgSavePath}/${filename}`, { quality: 50 });
           res.send('上传成功！');
         }
       });

@@ -1,16 +1,4 @@
 {
-  "lastId": "0",
-  "list": [
-    {
-      "id": "0",
-      "title": "logo.jpg",
-      "mimetype": "image/jpeg",
-      "size": "7505040",
-      "pixels": "237*78",
-      "date": 1585118118948,
-      "classify": "设计",
-      "url": "//image.darkroom.cc/logo.jpg",
-      "minUrl": "//image.darkroom.cc/min/logo.jpg"
-    }
-  ]
+  "lastId": "-1",
+  "list": []
 }
