@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
 const blog = require('./routes/blog');
+const photo = require('./routes/photo');
 const adminBlog = require('./routes/adminBlog');
 const adminPhoto = require('./routes/adminPhoto');
 const login = require('./routes/login');
@@ -30,6 +31,7 @@ app.use('/api/*', index);
 app.use('/api/login', login);
 app.use('/api/user', user);
 app.use('/api/blog', blog);
+app.use('/api/photo', photo);
 app.use('/api/admin/photo', adminPhoto);
 app.use('/api/admin/blog', adminBlog);
 
