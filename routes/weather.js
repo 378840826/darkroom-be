@@ -5,9 +5,9 @@ const router = express.Router();
 const bdAK = 'ZX6U4dVmF9dFiCduABKUbAAlzaoqhlxj';
 
 // 获取客户端 ip 所在位置
-function getLocal(req, res) {
-  return new Promise((resolve, reject) => {
-    const ipv4 = req.ip.match(/\d+\.\d+\.\d+\.\d+/)[0];
+function getLocal(req) {
+  return new Promise(resolve => {
+    const ipv4 = req.header('x-forwarded-for');
     const bdLocalApi = `https://api.map.baidu.com/location/ip?&coor=bd09ll&ak=${bdAK}&ip=${ipv4}`;
     request.get(bdLocalApi, (err, _, body) => {
       if (!err) {
@@ -16,10 +16,10 @@ function getLocal(req, res) {
           const { city } = content.address_detail; 
           resolve(city);
         } else {
-          reject('获取位置失败');
+          resolve('广州市');
         }
       } else {
-        reject('获取位置失败');
+        resolve('广州市');
       }
     })
   })
@@ -28,7 +28,7 @@ function getLocal(req, res) {
 // 获取天气
 async function getWeather(req, res) {
   const cityIdDict = require('../data/cityIdDict.js');
-  const err = {
+  const errInfo = {
     status: 'error',
     msg: '获取天气数据失败',
   };
@@ -46,14 +46,14 @@ async function getWeather(req, res) {
           } = result;
           res.send({ city, temp, text, rh, wind_dir, wind_class });
         } else {
-          res.send(err)
+          res.send(errInfo)
         }
       } else {
-        res.send(err)
+        res.send(errInfo)
       }
     })
   } catch (error) {
-    res.send(err)
+    res.send(errInfo)
   }
 }
 
