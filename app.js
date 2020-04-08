@@ -12,6 +12,7 @@ const adminBlog = require('./routes/adminBlog');
 const adminPhoto = require('./routes/adminPhoto');
 const login = require('./routes/login');
 const user = require('./routes/user');
+const weather = require('./routes/weather');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/blog', blog);
 app.use('/api/photo', photo);
 app.use('/api/admin/photo', adminPhoto);
 app.use('/api/admin/blog', adminBlog);
+app.use('/api/weather', weather);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
